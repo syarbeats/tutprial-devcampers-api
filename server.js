@@ -4,6 +4,8 @@ const bootcamps = require('./route/bootcamps');
 //const logger =  require('./middleware/logger')
 const morgan =  require('morgan');
 const connectDB = require('./config/db');
+const colors = require('colors')
+const errorHandler =  require('./middleware/error');
 
 
 dotenv.config({path: './config/config.env'});
@@ -21,7 +23,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 app.use('/api/v1/bootcamps', bootcamps);
-
+app.use(errorHandler);
 
 const server = app.listen(PORT, console.log(`The server running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`));
 

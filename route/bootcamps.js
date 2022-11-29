@@ -6,8 +6,11 @@ const {
         getBootcamp,
         createBootcamps,
         updateBootcamp,
-        deleteBootcamp
+        deleteBootcamp,
+        getBootcampInRadius
     } = require('../controller/bootcamps');
+
+router.route('/radius/:zipcode/:distance').get(getBootcampInRadius);
 
 router
     .route('/')

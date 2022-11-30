@@ -1,4 +1,4 @@
-const errorResponse = require('../utils/errorResponse');
+const ErrorResponse = require('../utils/errorResponse');
 const geocoder = require('../utils/geocoder');
 const Course =  require('../models/course');
 const asyncHandler = require('../middleware/async');
@@ -28,5 +28,26 @@ exports.getCourses = asyncHandler(async(req, res, next) => {
         success: true,
         count: courses.length,
         data: courses
+    });
+});
+
+
+//@desc          Get course by id
+//@route         /api/v1/courses/:id
+//@access        Public
+
+exports.getCourse = asyncHandler(async(req, res, next) => {
+    const course = await Course.findById(req.params.id).populate({
+        path: 'bootcamp',
+        select: 'name description'
+    }); 
+
+    if(!course){
+        return new ErrorResponse(`No course with id ${req.params.id}`, 404);
+    }
+
+    res.status(200).json({
+        success: true,
+        data: course
     });
 });

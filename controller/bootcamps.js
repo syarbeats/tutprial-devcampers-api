@@ -20,7 +20,10 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 
     console.log('QueryStr:'+queryStr);
 
-    query = Bootcamp.find(JSON.parse(queryStr));
+    query = Bootcamp.find(JSON.parse(queryStr)).populate({
+        path: 'courses',
+        select: 'title description tuition'
+    });
 
     if(req.query.select){
         const fields = req.query.select.split(',').join(' ');
@@ -72,7 +75,10 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
 
 exports.getBootcamp = asyncHandler(async (req, res, next) => {
     
-    const bootcamp = await Bootcamp.findById(req.params.id);
+    const bootcamp = await Bootcamp.findById(req.params.id).populate({
+        path: 'courses',
+        select: 'title description tuition'
+    });
         
     if(!bootcamp){
         return  next(new ErrorResponse(`Bootcamp not found wit id ${req.params.id}`, 404));;

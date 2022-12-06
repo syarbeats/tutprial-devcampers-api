@@ -4,6 +4,7 @@ const Course =  require('../models/course');
 const Bootcamp =  require('../models/bootcamp');
 const asyncHandler = require('../middleware/async');
 const { Query } = require('mongoose');
+const course = require('../models/course');
 
 
 //@desc          Get courses
@@ -12,24 +13,18 @@ const { Query } = require('mongoose');
 //@access        Public
 
 exports.getCourses = asyncHandler(async(req, res, next) => {
-    let query;
-
-    if(req.params.bootcampId){
-        query = Course.find({bootcamp: req.params.bootcampId});
-    }else{
-        query = Course.find().populate({
-            path: 'bootcamp',
-            select: 'name description'
-        });
-    }
     
-    const courses = await query;
+    if(req.params.bootcampId){
+        const courses = await Course.find({bootcamp: req.params.bootcampId});
 
-    res.status(200).json({
-        success: true,
-        count: courses.length,
-        data: courses
-    });
+        res.status(200).json({
+            success: true,
+            count: courses.length,
+            data: courses
+        });
+    }else{
+      res.status(200).json(res.advancedResult);
+    }
 });
 
 

@@ -10,7 +10,7 @@ const morgan =  require('morgan');
 const connectDB = require('./config/db');
 const colors = require('colors')
 const errorHandler =  require('./middleware/error');
-
+const cookieParser = require('cookie-parser');
 
 dotenv.config({path: './config/config.env'});
 
@@ -20,6 +20,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cookieParser());
 
 //app.use(logger);
 if(process.env.NODE_ENV === 'development'){

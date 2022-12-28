@@ -4,6 +4,7 @@ const dotenv =  require('dotenv');
 const bootcamps = require('./route/bootcamps');
 const courses = require('./route/courses');
 const auth = require('./route/auth');
+const users = require('./route/user');
 const fileupload = require('express-fileupload');
 //const logger =  require('./middleware/logger')
 const morgan =  require('morgan');
@@ -32,6 +33,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/users', users);
 app.use(errorHandler);
 
 
